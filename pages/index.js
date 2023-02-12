@@ -25,7 +25,8 @@ export default function Home(props) {
 
   useEffect(() => {
     const fetchedCoffeeStoresHandler = async () => {
-      const fetchedCoffeeStores = await fetchCoffeeStores(latLng, 30);
+      const res = await fetch(`/api/getCoffeeStoresByLocation?latLng=${latLng}&limit=30`);
+      const fetchedCoffeeStores = await res.json();
       //setCoffeeStores(fetchedCoffeeStores);
       dispatch({
         type: ACTION_TYPES.SET_COFFEE_STORES,
@@ -33,7 +34,7 @@ export default function Home(props) {
           coffeeStores: fetchedCoffeeStores
         }
       })
-      console.log({ fetchedCoffeeStores })
+      setCoffeeStoresError("");
     }
     if (latLng) {
       try {
